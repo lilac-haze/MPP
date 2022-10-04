@@ -77,12 +77,12 @@ class Hangman
     end
   end
 
-  # Sets word_state at beginning of game based on word length
+  
   def update_word_state_initial(length)
     self.word_state = "*" * length
   end
 
-  # Should be passed value from evaluate_guess
+  
   def update_word_state_with_indices(guess, indices)
     indices.each do |i|
       self.word_state[i] = guess
@@ -94,8 +94,7 @@ end
 class Player
   attr_accessor :word
 
-  # Prompt for a guess
-  # Return guess
+ 
   def make_guess
     print "Enter a letter or word to guess: "
     gets.chomp
@@ -108,7 +107,7 @@ class ComputerPlayer
 
   attr_accessor :word, :dictionary, :letters_guessed
 
-  # Create dictionary from dictionary.txt file
+  
   def initialize
     @dictionary = File.readlines("hangman_words.txt").map { |word| word.strip }
     @dictionary.map! { |word| word.gsub(/[^a-z]/, "") }
@@ -120,14 +119,13 @@ class ComputerPlayer
     self.dictionary.sample
   end
 
-  # Should be passed length of word
+  
   def update_dictionary_initial(length)
     self.dictionary = self.dictionary.select do |word|
       word.length == length
     end
   end
 
-  # Update to words matching letters in word_state
   def update_dictionary_with_word_state(word_state)
     self.dictionary = self.dictionary.select do |word|
       word_match = true
@@ -144,9 +142,6 @@ class ComputerPlayer
     end
   end
 
-  # Guess is single letter
-  # Check if letter is in word
-  # Return locations or "no" if not included
   def evaluate_guess(guess, word)
     if guess.length > 1
       return "yes" if guess == word
@@ -167,9 +162,9 @@ class ComputerPlayer
     end
   end
 
-  # Check winning guess when computer is hangman (full word guesses)
+
   def winning_guess?(guess, word)
-    # Accounts for guess being nil at beginning of game
+
     return false if guess.nil?
 
     if guess == word
